@@ -1,0 +1,79 @@
+{
+  "version": "risk_rain_v1",
+  "trained_at": "2026-08-31T00:00:00Z",
+  "trained_until": "2026-06-30",
+  "train_districts": 50,
+  "holdout_districts": 0,
+  "n_rows": 91250,
+  "feature_order": [
+    "precip_sum_fc_24h", "tmax_fc", "tmin_fc",
+    "rh_mean_fc", "rh_min_fc", "mslp_mean_fc",
+    "wind_speed_fc_max", "wind_gust_max_fc", "cloud_cover_mean_fc",
+    "precip_obs_24h", "precip_obs_72h", "precip_obs_7d", "precip_obs_30d",
+    "soil_moisture_0_7cm", "soil_moisture_7_28cm",
+    "dry_spell_length", "wet_spell_length",
+    "tmax_obs_lag1", "tmax_obs_lag3",
+    "normal_precip_month", "precip_departure_pct",
+    "normal_tmax_month", "tmax_departure",
+    "days_since_monsoon_onset",
+    "lat", "lon", "elevation_m", "distance_to_coast_km",
+    "sin_doy", "cos_doy",
+    "dewpoint_depression", "precip_anomaly", "antecedent_wetness",
+    "wind_speed_fc"
+  ],
+  "feature_ranges": {},
+  "targets": {
+    "target_rain": {
+      "description": "24-hour district probability of ≥2.5mm rainfall",
+      "base_rate": 0.25,
+      "pr_auc": 0.00,
+      "brier": 0.00,
+      "bss_vs_raw_nwp": 0.00,
+      "ece": 0.00,
+      "threshold": 0.50
+    },
+    "target_heavy": {
+      "description": "24-hour district probability of ≥64.5mm rainfall (IMD heavy category)",
+      "base_rate": 0.02,
+      "pr_auc": 0.00,
+      "brier": 0.00,
+      "bss_vs_raw_nwp": 0.00,
+      "ece": 0.00,
+      "threshold": 0.50
+    },
+    "target_heat": {
+      "description": "24-hour district probability of heat stress (≥40°C + ≥4.5°C departure)",
+      "base_rate": 0.03,
+      "pr_auc": 0.00,
+      "brier": 0.00,
+      "bss_vs_raw_nwp": 0.00,
+      "ece": 0.00,
+      "threshold": 0.50
+    }
+  },
+  "thresholds": {
+    "low": 0.15,
+    "moderate": 0.35,
+    "high": 0.60,
+    "severe": 0.80
+  },
+  "known_limitations": [
+    "Not valid for cyclone genesis or track",
+    "Not validated above 200 mm/24h — too few training examples",
+    "Himalayan districts underrepresented (n=2)",
+    "Temporal CV only; spatial validation pending",
+    "Calibrated on last fold; full calibration pending"
+  ],
+  "data_sources": {
+    "features": "Open-Meteo Historical Forecast API (previous-runs-api.open-meteo.com)",
+    "labels": "Open-Meteo Historical Weather API (archive-api.open-meteo.com, ERA5)",
+    "licensing": "CC BY 4.0, free tier ~10,000 requests/day non-commercial"
+  },
+  "training_config": {
+    "algorithm": "XGBClassifier",
+    "cv_method": "TimeSeriesSplit",
+    "n_splits": 5,
+    "calibration": "IsotonicRegression",
+    "threshold_selection": "recall ≥ 0.80"
+  }
+}

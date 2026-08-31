@@ -1,0 +1,262 @@
+{
+  "crops": [
+    {
+      "id": "soybean",
+      "name": "Soybean",
+      "aliases": ["soyabean", "सोयाबीन", "soya"],
+      "season": "kharif",
+      "stages": [
+        { "id": "sowing", "label": "Sowing / Germination" },
+        { "id": "vegetative", "label": "Vegetative Growth" },
+        { "id": "flowering", "label": "Flowering / Pod Initiation" },
+        { "id": "pod_fill", "label": "Pod Fill" },
+        { "id": "harvest", "label": "Maturity / Harvest" }
+      ],
+      "rules": [
+        {
+          "reasonCode": "pre_sowing_rain",
+          "condition": "rain_sum_today_gt_20",
+          "riskLevel": "moderate",
+          "action": "delay_sowing",
+          "window": "next_48h",
+          "message": "Heavy rainfall at sowing risks crusting and seed rot; wait for the soil to drain before sowing."
+        },
+        {
+          "reasonCode": "flowering_heavy_rain",
+          "condition": "rain_sum_today_gt_25",
+          "riskLevel": "high",
+          "action": "defer_irrigation_ensure_drainage",
+          "window": "today",
+          "message": "Heavy rain during flowering/pod development increases flower drop and waterlogging risk."
+        },
+        {
+          "reasonCode": "flowering_heat",
+          "condition": "temp_max_gt_38",
+          "riskLevel": "high",
+          "action": "avoid_stress_irrigation",
+          "window": "today",
+          "message": "High maximum temperature during flowering can cause flower and pod abortion."
+        },
+        {
+          "reasonCode": "disease_humidity_rain",
+          "condition": "humidity_gt_85_and_pop_tomorrow_gt_60",
+          "riskLevel": "moderate",
+          "action": "monitor_foliar_disease",
+          "window": "next_48h",
+          "message": "Prolonged high humidity with rain favours foliar diseases such as yellow mosaic; monitor and consider protective sprays after consulting local agronomists."
+        },
+        {
+          "reasonCode": "harvest_rain",
+          "condition": "pop_tomorrow_gt_50",
+          "riskLevel": "moderate",
+          "action": "advance_harvest",
+          "window": "next_24h",
+          "message": "Expected rain during grain drying raises spoilage risk; consider advancing harvest if grain moisture allows."
+        },
+        {
+          "reasonCode": "mild_conditions",
+          "condition": "dry_and_mild",
+          "riskLevel": "low",
+          "action": "proceed_normal_irrigation_schedule",
+          "window": "next_48h",
+          "message": "Conditions are favourable for normal irrigation scheduling."
+        }
+      ]
+    },
+    {
+      "id": "cotton",
+      "name": "Cotton",
+      "aliases": ["कापूस"],
+      "season": "kharif",
+      "stages": [
+        { "id": "sowing", "label": "Sowing" },
+        { "id": "vegetative", "label": "Vegetative" },
+        { "id": "flowering", "label": "Flowering" },
+        { "id": "boll_development", "label": "Boll Development" },
+        { "id": "harvest", "label": "Harvest / Picking" }
+      ],
+      "rules": [
+        {
+          "reasonCode": "flowering_heavy_rain",
+          "condition": "rain_sum_today_gt_25",
+          "riskLevel": "high",
+          "action": "defer_irrigation_ensure_drainage",
+          "window": "today",
+          "message": "Heavy rain during flowering/boll development increases boll rot and shedding; secure drainage and avoid irrigation."
+        },
+        {
+          "reasonCode": "harvest_rain",
+          "condition": "pop_tomorrow_gt_50",
+          "riskLevel": "high",
+          "action": "pause_picking",
+          "window": "next_24h",
+          "message": "Rain during picking damages open bolls; pause picking and protect harvested cotton."
+        },
+        {
+          "reasonCode": "mild_conditions",
+          "condition": "dry_and_mild",
+          "riskLevel": "low",
+          "action": "proceed_normal_irrigation_schedule",
+          "window": "next_48h",
+          "message": "Dry, mild conditions are favourable for boll development."
+        }
+      ]
+    },
+    {
+      "id": "wheat",
+      "name": "Wheat",
+      "aliases": ["गहू"],
+      "season": "rabi",
+      "stages": [
+        { "id": "sowing", "label": "Sowing" },
+        { "id": "tillering", "label": "Tillering" },
+        { "id": "heading", "label": "Heading" },
+        { "id": "grain_fill", "label": "Grain Fill" },
+        { "id": "harvest", "label": "Harvest" }
+      ],
+      "rules": [
+        {
+          "reasonCode": "heading_rain",
+          "condition": "rain_sum_today_gt_15",
+          "riskLevel": "high",
+          "action": "defer_irrigation",
+          "window": "today",
+          "message": "Rain during heading/grain fill increases disease (leaf rust) and lodging risk."
+        },
+        {
+          "reasonCode": "heat_stress",
+          "condition": "temp_max_gt_38",
+          "riskLevel": "high",
+          "action": "provide_relief_irrigation",
+          "window": "today",
+          "message": "High temperature during grain fill causes terminal heat stress; a light irrigation may buffer canopy temperature where irrigation is available."
+        },
+        {
+          "reasonCode": "mild_conditions",
+          "condition": "dry_and_mild",
+          "riskLevel": "low",
+          "action": "proceed_normal_irrigation_schedule",
+          "window": "next_48h",
+          "message": "Conditions are favourable for normal irrigation scheduling."
+        }
+      ]
+    },
+    {
+      "id": "rice",
+      "name": "Rice (Paddy)",
+      "aliases": ["paddy", "तांदूळ", "चावल"],
+      "season": "kharif",
+      "stages": [
+        { "id": "nursery", "label": "Nursery" },
+        { "id": "transplanting", "label": "Transplanting" },
+        { "id": "tillering", "label": "Tillering" },
+        { "id": "panicle_initiation", "label": "Panicle Initiation" },
+        { "id": "heading_flowering", "label": "Heading & Flowering" },
+        { "id": "harvest", "label": "Harvest" }
+      ],
+      "rules": [
+        {
+          "reasonCode": "windstorm_rice",
+          "condition": "wind_gt_45",
+          "riskLevel": "high",
+          "action": "secure_drainage_avoid_deep_water",
+          "window": "next_24h",
+          "message": "Strong wind during heading stages increases lodging; avoid deep standing water and repair bunds."
+        },
+        {
+          "reasonCode": "cold_spell",
+          "condition": "temp_min_lt_15",
+          "riskLevel": "moderate",
+          "action": "maintain_water_level",
+          "window": "next_24h",
+          "message": "Cool-night stress at flowering reduces grain set; maintain standing water to buffer temperature."
+        },
+        {
+          "reasonCode": "mild_conditions",
+          "condition": "dry_and_mild",
+          "riskLevel": "low",
+          "action": "follow_standing_water_schedule",
+          "window": "next_48h",
+          "message": "Conditions are favourable; maintain the standard standing-water schedule."
+        }
+      ]
+    },
+    {
+      "id": "sugarcane",
+      "name": "Sugarcane",
+      "aliases": ["ऊस", "गन्ना"],
+      "season": "perennial",
+      "stages": [
+        { "id": "planting", "label": "Planting" },
+        { "id": "tillering", "label": "Tillering" },
+        { "id": "grand_growth", "label": "Grand Growth Period" },
+        { "id": "maturity", "label": "Maturity" },
+        { "id": "ratooning", "label": "Ratooning" }
+      ],
+      "rules": [
+        {
+          "reasonCode": "heavy_rain_sugarcane",
+          "condition": "rain_sum_today_gt_30",
+          "riskLevel": "high",
+          "action": "clear_field_drains",
+          "window": "today",
+          "message": "Very heavy rain may flood ratoons and dilute soil aeration; clear field drains and keep furrows open."
+        },
+        {
+          "reasonCode": "heat_stress",
+          "condition": "temp_max_gt_40",
+          "riskLevel": "moderate",
+          "action": "stagger_irrigation_schedule",
+          "window": "next_48h",
+          "message": "Extreme heat increases evapotranspiration; align irrigation to cooler hours and mulch to preserve moisture."
+        },
+        {
+          "reasonCode": "mild_conditions",
+          "condition": "dry_and_mild",
+          "riskLevel": "low",
+          "action": "proceed_normal_irrigation_schedule",
+          "window": "next_48h",
+          "message": "Conditions are favourable for normal irrigation scheduling."
+        }
+      ]
+    },
+    {
+      "id": "onion",
+      "name": "Onion",
+      "aliases": ["कांदा", "प्याज"],
+      "season": "rabi_kharif",
+      "stages": [
+        { "id": "nursery", "label": "Nursery / Transplanting" },
+        { "id": "vegetative", "label": "Vegetative Growth" },
+        { "id": "bulb_formation", "label": "Bulb Formation" },
+        { "id": "harvest", "label": "Harvest / Curing" }
+      ],
+      "rules": [
+        {
+          "reasonCode": "bulb_rain",
+          "condition": "rain_sum_today_gt_20",
+          "riskLevel": "high",
+          "action": "defer_irrigation_protect_storage",
+          "window": "today",
+          "message": "Rain during bulb formation and at harvest raises rot and sprout risk; stop irrigation and shield curing bulbs from moisture."
+        },
+        {
+          "reasonCode": "flower_initiation_heat",
+          "condition": "temp_max_gt_38",
+          "riskLevel": "moderate",
+          "action": "mulch_and_shade",
+          "window": "next_48h",
+          "message": "High heat promotes premature bolting in onion; mulch to conserve moisture and reduce soil temperature."
+        },
+        {
+          "reasonCode": "mild_conditions",
+          "condition": "dry_and_mild",
+          "riskLevel": "low",
+          "action": "proceed_normal_irrigation_schedule",
+          "window": "next_48h",
+          "message": "Conditions are favourable for normal irrigation scheduling."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "name": "WeatherGPT",
+  "description": "AI-powered weather intelligence dashboard with conversational forecasting, real-time alerts, AQI monitoring, and multi-language voice interaction.",
+  "requestFramePermissions": ["microphone", "geolocation"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+
